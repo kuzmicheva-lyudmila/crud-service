@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "crud-service.fullname" . }}
+  labels:
+    {{- include "crud-service.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "crud-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "crud-service.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image }}:{{ .Chart.AppVersion }}"
+        env:
+        - name: spring.data.cassandra.contact-points
+          valueFrom:
+            configMapKeyRef:
+              name: crud-service-config
+              key: contact-points
+        - name: spring.data.cassandra.username
+          valueFrom:
+            secretKeyRef:
+              name: crud-service-secret
+              key: username
+        - name: spring.data.cassandra.password
+          valueFrom:
+            secretKeyRef:
+              name: crud-service-secret
+              key: password
+        ports:
+        - name: {{ .Values.service.targetPort}}
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
