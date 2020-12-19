@@ -49,6 +49,36 @@
 			"response": []
 		},
 		{
+			"name": "update user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"vasya\", \"email\": \"vasya_new@mil.ru\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://arch.homework/otusapp/kuzmicheva/users",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"otusapp",
+						"kuzmicheva",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "get users",
 			"request": {
 				"method": "GET",
@@ -116,7 +146,7 @@
 	],
 	"variable": [
 		{
-			"id": "8a6eb76d-eae1-4e91-9dc9-471fb69fa042",
+			"id": "eb6fb5b4-d932-42c7-a522-164e2a81e7f7",
 			"key": "userName",
 			"value": ""
 		}
